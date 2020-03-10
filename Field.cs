@@ -7,10 +7,9 @@
         SHIP
     }
 
-    public class Field : Coordinate
+    public class Field
     {
         private FieldState currentState;
-
 
         public FieldState CurrentState
         {
@@ -18,9 +17,34 @@
             set { currentState = value; }
         }
 
-        public Field(int xCoordinate, int yCoordinate) : base(xCoordinate, yCoordinate)
+        private int coordinate;
+
+        public int Coordinate
         {
+            get { return coordinate; }
+            set { coordinate = value; }
+        }
+
+        private string letter;
+
+        public string Letter
+        {
+            get { return letter; }
+            set { letter = value; }
+        }
+
+
+        public Field(int coordinate, string letter)
+        {
+            Coordinate = coordinate;
+            Letter = letter;
             CurrentState = FieldState.EMPTY;
+        }
+
+
+        public string GetFieldName()
+        {
+            return letter + Coordinate;
         }
     }
 }

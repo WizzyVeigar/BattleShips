@@ -7,15 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="ShootingResult" HorizontalAlignment="Left" Margin="194,363,0,0" VerticalAlignment="Top"/>
-        <Button Content="SHOOT" Name="btnShoot" HorizontalAlignment="Left" Margin="69,366,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Grid HorizontalAlignment="Center"  Height="Auto" VerticalAlignment="Top" Width="Auto" Name="btnGrid" ShowGridLines="True">
+        <Label Content="ShootingResult" HorizontalAlignment="Left" Margin="194,363,0,0" VerticalAlignment="Top" Name="lblText"/>
+        <Button Content="SHOOT" Name="btnShoot" HorizontalAlignment="Left" Margin="69,366,0,0" VerticalAlignment="Top" Width="75" Click="btn_ConfirmAction"/>
+
+        <DataGrid Margin="0,0,629,310">
+            
+        </DataGrid>
+        <Grid HorizontalAlignment="Center"  Height="Auto" VerticalAlignment="Top" Width="Auto" Name="btnGrid" Margin="246,30,246,0" ShowGridLines="False" MinHeight="225" MinWidth="300">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -29,11 +28,6 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

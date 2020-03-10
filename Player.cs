@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 namespace BattleShips
 {
     class Player
-    {      
-        private List<Ship> ships = new List<Ship>();
+    {
+        private Field[,] board = new Field[10, 10];
+
+        public Field[,] Board
+        {
+            get { return board; }
+            set { board = value; }
+        }
+
+        private List<Ship> ships;
         public List<Ship> Ships
         {
             get { return ships; }
@@ -23,21 +31,68 @@ namespace BattleShips
             set { name = value; }
         }
 
-        private PlayerBoard pBoard = new PlayerBoard(10);
-
-        public PlayerBoard PBoard
+        public Player(string name)
         {
-            get { return pBoard; }
-            set { pBoard = value; }
+            Name = name;
+            Ships = new List<Ship>()
+            {
+                    new Ship(2, "PatruljeBåd"),
+                    new Ship(3, "Ubåd"),
+                    new Ship(3, "Destroyer"),
+                    new Ship(4, "Slagskib"),
+                    new Ship(5, "HangarSkib")
+            };
+
+            FillBoard();
         }
 
-        public void PlaceShip(Ship shipToPlace, Coordinate coordinate)
+        public void PlaceShip(string coordinate)
         {
-            //PBoard.Board[coordinate.XCoordinate, coordinate.YCoordinate]
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < Board.GetLength(1); j++)
+                {
+                    CheckForSpace(coordinate, i, j);
+                }
+            }
         }
         //public void Shoot(Coordinate placeToShoot)
         //{
-            
+
         //}
+
+        public void CheckForSpace(string coordinateToCheck, int xCoordinate, int yCoordinate)
+        {
+            try
+            {
+                if (Board[xCoordinate, yCoordinate].GetFieldName() == coordinateToCheck)
+                {
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private bool CheckForValidMove()
+        {
+            return true;
+        }
+
+        private void FillBoard()
+        {
+            for (int i = 0; i < Board.GetLength(1); i++)
+            {
+                for (int j = 0; j < Board.GetLength(0); j++)
+                {
+                    char temp = (char)(j + 97);
+                    Board[i, j] = new Field(i, temp.ToString());
+                }
+            }
+        }
     }
 }

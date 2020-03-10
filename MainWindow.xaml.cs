@@ -21,48 +21,74 @@ namespace BattleShips
     public partial class MainWindow : Window
     {
         GameManager gameManager;
+        Button[] gridButtons;
+        Player p1;
+        Player p2;
+        string fieldSelected;
+
 
         public MainWindow()
         {
             gameManager = new GameManager();
+            gameManager.ChangeLabelEvent += GameManager_changeLabelEvent;
             InitializeComponent();
-
-            Binding gridBinding = new Binding();
-            //gridBinding.Source = UpdateCoordinates();
+            p1 = new Player("Lars");
+            p2 = new Player("Lars2");
+            gameManager.players.Add(p1);
+            gameManager.players.Add(p2);
+            //gameManager.convertGridToBoard(btnGrid);
+            FillGrid();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void GameManager_changeLabelEvent(object sender, EventArgs e)
         {
-            Player p1 = new Player();
-            Player p2 = new Player();
+            lblText.Content = sender.ToString();
+        }
 
-            gameManager.RunGame(p1, p2);
-            UpdateCoordinates();
+
+        private void btn_ConfirmAction(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(fieldSelected))
+            {
+                gameManager.players[gameManager.playerTurn].PlaceShip(fieldSelected);
+
+                if (gameManager.playerTurn == gameManager.players.Count)
+                {
+                    gameManager.playerTurn = 0;
+                }
+                gameManager.playerTurn++;
+            }
         }
 
         /// <summary>
         /// Stupid method :(
         /// </summary>
-        private void UpdateCoordinates()
+        private void FillGrid()
         {
-            int count = 1;
+            gridButtons = new Button[gameManager.players[0].Board.Length];
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < gameManager.players[0].Board.GetLength(1); i++)
             {
-                for (int j = 0; j < 15; j++)
+                for (int j = 0; j < gameManager.players[0].Board.GetLength(0); j++)
                 {
                     Button MyControl = new Button();
-                    MyControl.Content = count.ToString();
-                    MyControl.Name = "Button" + count.ToString();
+                    MyControl.Content = gameManager.players[0].Board[i, j].GetFieldName();
+                    MyControl.Name = "Button" + gameManager.players[0].Board[i, j].GetFieldName();
+                    MyControl.Tag = gameManager.players[0].Board[i, j].GetFieldName();
+                    MyControl.Click += btn_ChangeState;
 
                     Grid.SetColumn(MyControl, j);
                     Grid.SetRow(MyControl, i);
-                    btnGrid.Children.Add(MyControl);
+                    gridButtons[i + j] = MyControl;
 
-                    count++;
+                    btnGrid.Children.Add(gridButtons[i + j]);
                 }
-
             }
+        }
+
+        private void btn_ChangeState(object sender, RoutedEventArgs e)
+        {
+            fieldSelected = ((Button)sender).Tag.ToString();
         }
     }
 }
